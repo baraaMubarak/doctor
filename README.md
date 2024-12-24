@@ -15,5 +15,5 @@ To run the Doctors App locally, follow these steps:
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/baraaMubarak/doctors-app.git
-   cd doctors-app
+   git clone https://github.com/baraaMubarak/doctor.git
+   cd doctor
