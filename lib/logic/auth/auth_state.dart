@@ -1,4 +1,5 @@
 enum AuthType { login, register }
+enum RegisterType { doctor, patient }
 
 class AuthState {
   final AuthType? authType;
