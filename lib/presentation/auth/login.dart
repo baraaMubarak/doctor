@@ -1,5 +1,6 @@
 import 'package:doctor_flutter_web/logic/auth/auth_cubit.dart';
 import 'package:doctor_flutter_web/logic/auth/auth_state.dart';
+import 'package:doctor_flutter_web/model/User.dart';
 import 'package:doctor_flutter_web/presentation/core/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,23 +8,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthCubit>(
-      create: (BuildContext context) =>
-          AuthCubit(AuthState(authType: AuthType.login)),
-      child: Scaffold(
-        backgroundColor: const Color(0xFFf5f5f5),
-        body: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width / 8),
-          child: Column(
-            children: [
-              Menu(),
-              // MediaQuery.of(context).size.width >= 980
-              //     ? Menu()
-              //     : SizedBox(), // Responsive
-              Expanded(child: Body())
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: const Color(0xFFf5f5f5),
+      body: Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width / 8),
+        child: Column(
+          children: [
+            Menu(),
+            // MediaQuery.of(context).size.width >= 980
+            //     ? Menu()
+            //     : SizedBox(), // Responsive
+            Expanded(child: Body())
+          ],
         ),
       ),
     );
@@ -38,7 +35,7 @@ class Menu extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Spacer(),
+          const Spacer(),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.start,
           //   children: [
@@ -56,7 +53,7 @@ class Menu extends StatelessWidget {
                       title: 'Sign In',
                       authType: AuthType.login,
                       context: context),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   _unselectedButton(
@@ -72,7 +69,7 @@ class Menu extends StatelessWidget {
                       title: 'Sign In',
                       context: context,
                       authType: AuthType.login),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   _menuItem(
@@ -113,16 +110,17 @@ class Menu extends StatelessWidget {
             children: [
               Text(
                 '$title',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.deepPurple,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                 decoration: BoxDecoration(
                   color: Colors.deepPurple,
                   borderRadius: BorderRadius.circular(30),
@@ -157,7 +155,7 @@ class Menu extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black54,
           ),
@@ -189,31 +187,31 @@ class Body extends StatelessWidget {
                     children: [
                       Text(
                         '${isLoginPage ? 'Sign In' : 'Register'} to \nDoctor App',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 45,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Text(
                         "If you ${isLoginPage ? "don't " : ''}have an account",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black54, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "You can",
                             style: TextStyle(
                                 color: Colors.black54,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
                           InkWell(
                             onTap: () {
                               if (isLoginPage) {
@@ -227,7 +225,7 @@ class Body extends StatelessWidget {
                             },
                             child: Text(
                               "${isLoginPage ? 'Register' : 'LogIn'} here!",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.deepPurple,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -269,7 +267,7 @@ class Body extends StatelessWidget {
                   );
                 } else {
                   return Container(
-                    child: _formLogin(),
+                    child: _formLogin(context),
                   );
                 }
               },
@@ -280,108 +278,127 @@ class Body extends StatelessWidget {
     );
   }
 
-  Widget _formLogin() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(height: 130,),
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Enter email or Phone number',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade50),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade50),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Password',
-            counterText: 'Forgot password?',
-            suffixIcon: Icon(
-              Icons.visibility_off_outlined,
-              color: Colors.grey,
-            ),
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade50),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blueGrey.shade50),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        SizedBox(height: 40),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blueGrey.shade50,
-                spreadRadius: 10,
-                blurRadius: 20,
-              ),
-            ],
-          ),
-          child: ElevatedButton(
-            child: Container(
-                width: double.infinity,
-                height: 50,
-                child: Center(child: Text("Sign In"))),
-            onPressed: () => print("it's pressed"),
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.deepPurple,
-              shape: RoundedRectangleBorder(
+  Widget _formLogin(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    TextEditingController userNameCont = TextEditingController();
+    TextEditingController passCont = TextEditingController();
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 130,),
+          TextFormField(
+            // key: _formKey,
+            controller: userNameCont,
+            decoration: InputDecoration(
+              hintText: 'User name',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
                 borderRadius: BorderRadius.circular(15),
               ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'اسم المستخدم مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+          TextFormField(
+            // key: _formKey,
+            controller: passCont,
+            decoration: InputDecoration(
+              hintText: 'Password',
+              counterText: 'Forgot password?',
+              suffixIcon: const Icon(
+                Icons.visibility_off_outlined,
+                color: Colors.grey,
+              ),
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'كبمة المرور مطلوبة';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 40),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blueGrey.shade50,
+                  spreadRadius: 10,
+                  blurRadius: 20,
+                ),
+              ],
+            ),
+            child: BlocBuilder<AuthCubit,AuthState>(
+              builder: (context, state) {
+                bool isLoading = state.getUserState == GetUserState.loading;
+                if(state.getUserState == GetUserState.success){
+                  Future.delayed(Duration.zero,() => Navigator.pushReplacementNamed(context, '/patient'),);
+                }
+                return Column(
+                  children: [
+                    if(state.getUserState == GetUserState.failure)
+                    Text(state.error!,style: const TextStyle(color: Colors.red),),
+                    ElevatedButton(
+                      onPressed: !isLoading?() {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<AuthCubit>().login(userName: userNameCont.text, password: passCont.text);
+                        } else {
+                          print("Validation Failed");
+                        }
+
+                      }:null,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepPurple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          child:  Center(child: isLoading?Text("جار تسجيل الدخول"):Text("Sign In"))),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
-        ),
-        SizedBox(height: 40),
-        // Row(children: [
-        //   Expanded(
-        //     child: Divider(
-        //       color: Colors.grey[300],
-        //       height: 50,
-        //     ),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 20),
-        //     child: Text("Or continue with"),
-        //   ),
-        //   Expanded(
-        //     child: Divider(
-        //       color: Colors.grey[400],
-        //       height: 50,
-        //     ),
-        //   ),
-        // ]),
-        // SizedBox(height: 40),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     _loginWithButton(image: 'images/google.png'),
-        //     _loginWithButton(image: 'images/github.png', isActive: true),
-        //     _loginWithButton(image: 'images/facebook.png'),
-        //   ],
-        // ),
-      ],
+          const SizedBox(height: 40),
+
+        ],
+      ),
     );
   }
 
@@ -394,15 +411,17 @@ class Body extends StatelessWidget {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 50,),
+              const SizedBox(
+                height: 50,
+              ),
               // Email
               TextFormField(
                 decoration: InputDecoration(
                   hintText: 'البريد الإلكتروني',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -419,7 +438,7 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // National ID
               TextFormField(
@@ -427,8 +446,8 @@ class Body extends StatelessWidget {
                   hintText: 'رقم الهوية الوطنية',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -445,7 +464,7 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Health Insurance Number (Optional)
               TextFormField(
@@ -453,8 +472,8 @@ class Body extends StatelessWidget {
                   hintText: 'رقم التأمين الصحي',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -465,7 +484,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Age
               TextFormField(
@@ -474,8 +493,8 @@ class Body extends StatelessWidget {
                   hintText: 'العمر',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -492,13 +511,14 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Gender
               DropdownButtonFormField<String>(
                 items: [
-                  DropdownMenuItem(child: Text("Male"), value: "male"),
-                  DropdownMenuItem(child: Text("Female"), value: "female"),
+                  const DropdownMenuItem(child: Text("Male"), value: "male"),
+                  const DropdownMenuItem(
+                      child: Text("Female"), value: "female"),
                 ],
                 onChanged: (value) {},
                 decoration: InputDecoration(
@@ -521,7 +541,7 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Phone Number
               TextFormField(
@@ -530,8 +550,8 @@ class Body extends StatelessWidget {
                   hintText: 'رقم الهاتف',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -542,7 +562,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Address
               TextFormField(
@@ -550,8 +570,8 @@ class Body extends StatelessWidget {
                   hintText: 'العنوان',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -562,7 +582,7 @@ class Body extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Identity Image
               TextButton.icon(
@@ -570,7 +590,7 @@ class Body extends StatelessWidget {
                 icon: const Icon(Icons.upload_file, color: Colors.deepPurple),
                 label: const Text("Upload Identity Image"),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               // Submit Button
               Container(
@@ -589,7 +609,7 @@ class Body extends StatelessWidget {
                   child: Container(
                       width: double.infinity,
                       height: 50,
-                      child: Center(child: Text("Submit"))),
+                      child: const Center(child: Text("Submit"))),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       print("Form Submitted");
@@ -606,11 +626,11 @@ class Body extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               TextButton(onPressed: () {
                 context.read<AuthCubit>().changeRegisterType(registerType: RegisterType.doctor);
               }, child: const Text('Register As A Doctor')),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
             ],
           ),
         ),
@@ -619,22 +639,29 @@ class Body extends StatelessWidget {
   }
 
   Widget _formDoctorRegister(BuildContext context) {
-
+// Controllers
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _specialtyController = TextEditingController();
+    final TextEditingController _phoneController = TextEditingController();
+    final TextEditingController _addressController = TextEditingController();
+    final TextEditingController _userNameController = TextEditingController();
     return Expanded(
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 50,),
+              const SizedBox(height: 50),
               // Doctor Name
               TextFormField(
+                controller: _nameController,
                 decoration: InputDecoration(
                   hintText: 'اسم الدكتور',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -651,16 +678,41 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
-
+              const SizedBox(height: 30),
+              TextFormField(
+                controller: _userNameController,
+                decoration: InputDecoration(
+                  hintText: 'اسم المستخدم',
+                  filled: true,
+                  fillColor: Colors.blueGrey[50],
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'اسم المستخدم مطلوب';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 30),
               // Email
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   hintText: 'البريد الإلكتروني',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -674,23 +726,21 @@ class Body extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'البريد الإلكتروني مطلوب';
                   }
-                  // Add logic to check if email is already taken
+
                   return null;
                 },
               ),
-              SizedBox(height: 30),
-
-
-
+              const SizedBox(height: 30),
 
               // Specialty
               TextFormField(
+                controller: _specialtyController,
                 decoration: InputDecoration(
                   hintText: 'التخصص',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -707,17 +757,18 @@ class Body extends StatelessWidget {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-              // Phone Number (Optional)
+              // Phone Number (Required)
               TextFormField(
+                controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   hintText: 'رقم الهاتف',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -727,17 +778,24 @@ class Body extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'رقم الهاتف مطلوب';
+                  }
+                  return null;
+                },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-              // Address (Optional)
+              // Address (Required)
               TextFormField(
+                controller: _addressController,
                 decoration: InputDecoration(
                   hintText: 'العنوان',
                   filled: true,
                   fillColor: Colors.blueGrey[50],
-                  labelStyle: TextStyle(fontSize: 12),
-                  contentPadding: EdgeInsets.only(left: 30),
+                  labelStyle: const TextStyle(fontSize: 12),
+                  contentPadding: const EdgeInsets.only(left: 30),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blueGrey.shade50),
                     borderRadius: BorderRadius.circular(15),
@@ -747,8 +805,14 @@ class Body extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'العنوان مطلوب';
+                  }
+                  return null;
+                },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Submit Button
               Container(
@@ -763,32 +827,68 @@ class Body extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: ElevatedButton(
-                  child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: Center(child: Text("Submit"))),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print("Form Submitted");
-                    } else {
-                      print("Validation Failed");
+                child: BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    if (state.getUserState == GetUserState.success) {
+                      Future.delayed(Duration.zero,() => Navigator.pushNamed(context, '/doctor'),);
                     }
+                    return Column(
+                      children: [
+                        if (state.getUserState == GetUserState.failure)
+                          Text(
+                            state.error!,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ElevatedButton(
+                          onPressed: state.getUserState != GetUserState.loading
+                              ? () {
+                                  if (_formKey.currentState!.validate()) {
+                                    User user = User(
+                                      name: _nameController.text,
+                                      username: _userNameController.text,
+                                      email: _emailController.text,
+                                      specialty: _specialtyController.text,
+                                      phoneNumber: _phoneController.text,
+                                      address: _addressController.text,
+                                    );
+
+                                    context.read<AuthCubit>().register(user);
+                                  } else {
+                                    print("Validation Failed");
+                                  }
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.deepPurple,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              child: state.getUserState == GetUserState.loading
+                                  ? SizedBox(
+                                      width: 50,
+                                      child: CircularProgressIndicator())
+                                  : const Center(child: Text("تسجيل"))),
+                        ),
+                      ],
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.deepPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
                 ),
               ),
-              SizedBox(height: 5),
-              TextButton(onPressed: () {
-                context.read<AuthCubit>().changeRegisterType(registerType: RegisterType.patient);
-              }, child: const Text('Register As A Patient')),
-              SizedBox(height: 40),
+              const SizedBox(height: 5),
+              TextButton(
+                onPressed: () {
+                  context
+                      .read<AuthCubit>()
+                      .changeRegisterType(registerType: RegisterType.patient);
+                },
+                child: const Text('Register As A Patient'),
+              ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
@@ -812,10 +912,10 @@ class Body extends StatelessWidget {
               Colors.deepPurple,
               foregroundColor: Colors.white,
             ),
-            child: Text("Register As a Doctor"),
+            child: const Text("Register As a Doctor"),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         SizedBox(
           height: 50,
           child: ElevatedButton(
@@ -827,7 +927,7 @@ class Body extends StatelessWidget {
               Colors.grey[300],
               foregroundColor: Colors.black,
             ),
-            child: Text("Register As a Patient"),
+            child: const Text("Register As a Patient"),
           ),
         ),
       ],

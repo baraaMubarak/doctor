@@ -35,6 +35,10 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_bloc: ^8.1.6
+  http: ^1.2.2
+  logger: ^2.5.0
+  shared_preferences: ^2.3.5
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:
