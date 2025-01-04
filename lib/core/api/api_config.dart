@@ -3,5 +3,7 @@ class ApiConfig{
   static const String login = '${domain}login';
   static const String registerPatient = '${domain}register/patient';
   static const String registerDoctor = '${domain}register/doctor';
+  static const String getDoctors = '${domain}doctors';
+  static const String getUsers = '${domain}admin/all-users';
 }
 

@@ -8,21 +8,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFf5f5f5),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width / 8),
-        child: Column(
-          children: [
-            Menu(),
-            // MediaQuery.of(context).size.width >= 980
-            //     ? Menu()
-            //     : SizedBox(), // Responsive
-            Expanded(child: Body())
-          ],
-        ),
-      ),
+
+    return BlocBuilder<AuthCubit,AuthState>(
+      builder: (context, state) {
+        if(state.user != null){
+          Future.delayed(Duration.zero,() => Navigator.pushReplacementNamed(context, '/patient'),);
+        }
+        return Scaffold(
+          backgroundColor: const Color(0xFFf5f5f5),
+          body: Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width / 8),
+            child: Column(
+              children: [
+                Menu(),
+                // MediaQuery.of(context).size.width >= 980
+                //     ? Menu()
+                //     : SizedBox(), // Responsive
+                Expanded(child: Body())
+              ],
+            ),
+          ),
+        );
+      },
+
     );
   }
 }

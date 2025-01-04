@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class User {
   String? name;
@@ -66,7 +65,7 @@ class User {
       token: token??json['access_token'],
       name: json['name'],
       email: json['email'],
-      isVerified: json['is_verified'],
+      isVerified: json['is_verified'] == 0?false:true,
       identityImage: json['identity_image'],
       address: json['address'],
       phoneNumber: json['phone_number'],
@@ -84,6 +83,6 @@ class User {
   }
   @override
   String toString() {
-    return 'User(name: $name, email: $email, specialty: $specialty, phoneNumber: $phoneNumber, address: $address, role: $role, isVerified: $isVerified)';
+    return 'User(name: $name, email: $email, specialty: $specialty, phoneNumber: $phoneNumber, address: $address, role: $role, isVerified: $isVerified, token: $token)';
   }
 }
