@@ -31,10 +31,11 @@ class MainPatient extends StatelessWidget {
           user = state.user!;
           return Scaffold(
             body: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 1,
-                  child: UserProfile(user: user),
+                  child: UserProfile(user: user,appUser: user,),
                 ),
                 Expanded(
                     flex: 2,
@@ -46,7 +47,7 @@ class MainPatient extends StatelessWidget {
                 BlocBuilder<MiddleCubit,MiddleState>(
                   builder: (context, state) {
                     if(state.rightUser != null) {
-                      return Expanded(flex: 1,child: UserProfile(user: state.rightUser!,isMe: false,));
+                      return Expanded(flex: 1,child: UserProfile(user: state.rightUser!,appUser: user,isMe: false,));
                     }else{
                       return SizedBox();
                     }
@@ -66,17 +67,18 @@ class UserProfile extends StatelessWidget {
    UserProfile({
     super.key,
     required this.user,
+    required this.appUser,
     this.isMe = true,
   });
 
   final User user;
+  final User appUser;
   final bool isMe;
 
   @override
   Widget build(BuildContext context) {
     final bool isDoctor = user.role == 'doctor';
     final bool isAdmin = user.role == 'admin';
-
     return Stack(
       children: [
         Column(
@@ -120,7 +122,7 @@ class UserProfile extends StatelessWidget {
                     children: [
                       ...[
                         if (user.username != null) 'User Name: ${user.username}',
-                        // if (user.name != null) 'Name: ${user.name}',
+                        if (user.name != null) 'Name: ${user.name}',
                         if (user.email != null) 'Email: ${user.email}',
                         if (user.nationalId != null) 'National ID: ${user.nationalId}',
                         if (user.role != null) 'Role: ${user.role}',
@@ -148,30 +150,63 @@ class UserProfile extends StatelessWidget {
                     ],
                   ),
                   if(!isMe)
-                    InkWell(
+                    Column(
+                      children: [
+                        if(!user.isVerified!)
+                        InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                            if(isAdmin){
 
-                      borderRadius: BorderRadius.circular(30),
-                      onTap: () {
-                        // context.read<MiddleCubit>().getDoctors(user: user);
-
-                      },
-                      hoverColor: Colors.blue,
-
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: Colors.black)
-                            // color: Colors.blue,
+                            }
+                          },
+                          hoverColor: Colors.blue,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.blue)
+                                // color: Colors.blue,
+                                ),
+                            height: 50,
+                            child:  Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  appUser.role == 'patient'?'Ask hem to meet me?':appUser.role == 'admin'?'Verify User':'',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                        height: 50,
-                        child:  const Row(
-                          mainAxisAlignment: MainAxisAlignment
-                              .spaceAround,
-                          children: [
-                            Text('Ask hem to meet me?',style: TextStyle(color: Colors.black),),
-                          ],
+                        SizedBox(height: 10,),
+                        if(appUser.role == 'admin')
+                        InkWell(
+                          borderRadius: BorderRadius.circular(30),
+                          onTap: () {
+                              context.read<MiddleCubit>().deleteUser(user:appUser,userName:user.username!);
+
+                          },
+                          hoverColor: Colors.red,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                border: Border.all(color: Colors.red)
+                                // color: Colors.blue,
+                                ),
+                            height: 50,
+                            child:  const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  'Delete User',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   if(isMe)
                   Column(
@@ -208,8 +243,10 @@ class UserProfile extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                         onTap: () {
                           if(isAdmin){
-
-                          }else if(isDoctor){
+                              context
+                                  .read<MiddleCubit>()
+                                  .getPendingUsers(user: user);
+                            }else if(isDoctor){
 
                           }else {
                           }

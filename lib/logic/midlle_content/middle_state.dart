@@ -7,7 +7,7 @@ class MiddleState {
   late Widget widget;
   // late Widget rightWidget;
   late User? rightUser;
-  List<User>? doctors;
+  List<User>? users;
   Map<String,List<User>>? allUsers;
   String? message;
   DoctorStatus doctorStatus;
@@ -18,7 +18,7 @@ class MiddleState {
     this.allUsers,
     // Widget? rightWidget,
     String? message,
-    this.doctors,
+    this.users,
     this.doctorStatus = DoctorStatus.init,
   }) {
     if (widget == null) {
@@ -33,20 +33,25 @@ class MiddleState {
     User? rightUser,
     Widget? rightWidget,
     String? message,
-    List<User>? doctors,
+    List<User>? users,
     Map<String,List<User>>? allUsers,
     DoctorStatus? doctorStatus,
   }) {
+    User? rightUserNew = rightUser ?? this.rightUser;
+    if(rightUserNew != null){
+      rightUserNew = rightUserNew.username == null?null:rightUserNew;
+    }
     return MiddleState(
       widget: widget ?? this.widget,
       message: message ?? this.message,
-      doctors: doctors ?? this.doctors,
+      users: users ?? this.users,
       doctorStatus: doctorStatus ?? this.doctorStatus,
       // rightWidget: rightWidget ?? this.rightWidget,
-      rightUser: rightUser ?? this.rightUser,
+      rightUser: rightUserNew,
       allUsers: allUsers ?? this.allUsers,
     );
   }
+
 
   Widget _init({String? message}) {
     return Container(
