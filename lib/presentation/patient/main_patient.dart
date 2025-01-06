@@ -49,7 +49,7 @@ class MainPatient extends StatelessWidget {
                     if(state.rightUser != null) {
                       return Expanded(flex: 1,child: UserProfile(user: state.rightUser!,appUser: user,isMe: false,));
                     }else{
-                      return SizedBox();
+                      return const SizedBox();
                     }
                   },
 
@@ -173,13 +173,13 @@ class UserProfile extends StatelessWidget {
                               children: [
                                 Text(
                                   appUser.role == 'patient'?'Ask hem to meet me?':appUser.role == 'admin'?'Verify User':'',
-                                  style: TextStyle(color: Colors.black),
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         if(appUser.role == 'admin')
                         InkWell(
                           borderRadius: BorderRadius.circular(30),
@@ -233,7 +233,7 @@ class UserProfile extends StatelessWidget {
                                 .spaceAround,
                             children: [
                               Text(isAdmin?'Show All Users':'Find Doctor'),
-                              Icon(Icons.send),
+                              const Icon(Icons.send),
                             ],
                           ),
                         ),
@@ -262,7 +262,7 @@ class UserProfile extends StatelessWidget {
                                 .spaceAround,
                             children: [
                               Text(isAdmin?'Show Pending User':'Your Appointment'),
-                              Icon(Icons.send),
+                              const Icon(Icons.send),
                             ],
                           ),
                         ),

@@ -118,7 +118,7 @@ class Menu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '$title',
+                title,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.deepPurple,
@@ -150,7 +150,7 @@ class Menu extends StatelessWidget {
       onTap: () => context.read<AuthCubit>().changeAuthType(authType: authType),
       child: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: Responsive.isMobile(context!) ? 20 : 78, vertical: 8),
+            horizontal: Responsive.isMobile(context) ? 20 : 78, vertical: 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -190,62 +190,60 @@ class Body extends StatelessWidget {
             child: BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 bool isLoginPage = state.authType == AuthType.login;
-                return Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${isLoginPage ? 'Sign In' : 'Register'} to \nDoctor App',
-                        style: const TextStyle(
-                          fontSize: 45,
-                          fontWeight: FontWeight.bold,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${isLoginPage ? 'Sign In' : 'Register'} to \nDoctor App',
+                      style: const TextStyle(
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "If you ${isLoginPage ? "don't " : ''}have an account",
+                      style: const TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "You can",
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        "If you ${isLoginPage ? "don't " : ''}have an account",
-                        style: const TextStyle(
-                            color: Colors.black54, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "You can",
-                            style: TextStyle(
-                                color: Colors.black54,
+                        const SizedBox(width: 15),
+                        InkWell(
+                          onTap: () {
+                            if (isLoginPage) {
+                              context.read<AuthCubit>().changeAuthType(
+                                  authType: AuthType.register);
+                            } else {
+                              context
+                                  .read<AuthCubit>()
+                                  .changeAuthType(authType: AuthType.login);
+                            }
+                          },
+                          child: Text(
+                            "${isLoginPage ? 'Register' : 'LogIn'} here!",
+                            style: const TextStyle(
+                                color: Colors.deepPurple,
                                 fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(width: 15),
-                          InkWell(
-                            onTap: () {
-                              if (isLoginPage) {
-                                context.read<AuthCubit>().changeAuthType(
-                                    authType: AuthType.register);
-                              } else {
-                                context
-                                    .read<AuthCubit>()
-                                    .changeAuthType(authType: AuthType.login);
-                              }
-                            },
-                            child: Text(
-                              "${isLoginPage ? 'Register' : 'LogIn'} here!",
-                              style: const TextStyle(
-                                  color: Colors.deepPurple,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        'images/illustration-2.png',
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    Image.asset(
+                      'images/illustration-2.png',
+                    ),
+                  ],
                 );
               },
             ),
