@@ -101,17 +101,15 @@ class Menu extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
       onTap: () {
-        if (context != null) {
-          context.read<AuthCubit>().changeAuthType(authType: authType!);
+        context.read<AuthCubit>().changeAuthType(authType: authType!);
 
-        }
-      },
+            },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Container(
           margin: EdgeInsets.only(
               right: Responsive.isMobile(context!) ? 20 : 75,
-              left: Responsive.isMobile(context!) ? 20 : 75,
+              left: Responsive.isMobile(context) ? 20 : 75,
               top: 3,
               bottom: 3),
           child: Column(
@@ -241,7 +239,7 @@ class Body extends StatelessWidget {
                       ],
                     ),
                     Image.asset(
-                      'images/illustration-2.png',
+                      'assets/images/illustration-2.png',
                     ),
                   ],
                 );
@@ -252,7 +250,7 @@ class Body extends StatelessWidget {
         if (Responsive.isDesktop(context))
           Expanded(
             child: Image.asset(
-              'images/illustration-1.png',
+              'assets/images/illustration-1.png',
             ),
           ),
         Expanded(
@@ -412,235 +410,242 @@ class Body extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   Widget _formPatientRegister(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              // Email
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'البريد الإلكتروني',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'البريد الإلكتروني مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // National ID
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'رقم الهوية الوطنية',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'رقم الهوية الوطنية مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // Health Insurance Number (Optional)
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'رقم التأمين الصحي',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Age
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'العمر',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'العمر مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // Gender
-              DropdownButtonFormField<String>(
-                items: [
-                  const DropdownMenuItem(child: Text("Male"), value: "male"),
-                  const DropdownMenuItem(
-                      child: Text("Female"), value: "female"),
-                ],
-                onChanged: (value) {},
-                decoration: InputDecoration(
-                  hintText: 'الجنس',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'الجنس مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // Phone Number
-              TextFormField(
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  hintText: 'رقم الهاتف',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Address
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'العنوان',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Identity Image
-              TextButton.icon(
-                onPressed: () {}, // Add functionality here
-                icon: const Icon(Icons.upload_file, color: Colors.deepPurple),
-                label: const Text("Upload Identity Image"),
-              ),
-              const SizedBox(height: 40),
-
-              // Submit Button
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey.shade50,
-                      spreadRadius: 10,
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-                child: ElevatedButton(
-                  child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: const Center(child: Text("Submit"))),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print("Form Submitted");
-                    } else {
-                      print("Validation Failed");
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.deepPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 5),
-              TextButton(onPressed: () {
-                context.read<AuthCubit>().changeRegisterType(registerType: RegisterType.doctor);
-              }, child: const Text('Register As A Doctor')),
-              const SizedBox(height: 40),
-            ],
+    TextEditingController emailController = TextEditingController();
+    TextEditingController nationalIdController = TextEditingController();
+    TextEditingController healthInsuranceNumberController = TextEditingController();
+    TextEditingController ageController = TextEditingController();
+    TextEditingController gender = TextEditingController();
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 50,
           ),
-        ),
+          // Email
+          TextFormField(
+            controller:emailController,
+            decoration: InputDecoration(
+
+              hintText: 'البريد الإلكتروني',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'البريد الإلكتروني مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // National ID
+          TextFormField(
+            controller: nationalIdController,
+            decoration: InputDecoration(
+              hintText: 'رقم الهوية الوطنية',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'رقم الهوية الوطنية مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Health Insurance Number (Optional)
+          TextFormField(
+            controller: healthInsuranceNumberController,
+            decoration: InputDecoration(
+              hintText: 'رقم التأمين الصحي',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          // Age
+          TextFormField(
+            controller: ageController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: 'العمر',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'العمر مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Gender
+          DropdownButtonFormField<String>(
+            items: const [
+              DropdownMenuItem(value: "male", child: Text("Male")),
+              DropdownMenuItem(
+                  value: "female",
+                  child: Text("Female")),
+            ],
+            onChanged: (value) {},
+            decoration: InputDecoration(
+              hintText: 'الجنس',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'الجنس مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Phone Number
+          TextFormField(
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
+              hintText: 'رقم الهاتف',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          // Address
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: 'العنوان',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+
+          // Identity Image
+          TextButton.icon(
+            onPressed: () {}, // Add functionality here
+            icon: const Icon(Icons.upload_file, color: Colors.deepPurple),
+            label: const Text("Upload Identity Image"),
+          ),
+          const SizedBox(height: 40),
+
+          // Submit Button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blueGrey.shade50,
+                  spreadRadius: 10,
+                  blurRadius: 20,
+                ),
+              ],
+            ),
+            child: ElevatedButton(
+              child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: const Center(child: Text("Submit"))),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  print("Form Submitted");
+                } else {
+                  print("Validation Failed");
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.deepPurple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          TextButton(onPressed: () {
+            context.read<AuthCubit>().changeRegisterType(registerType: RegisterType.doctor);
+          }, child: const Text('Register As A Doctor')),
+          const SizedBox(height: 40),
+        ],
       ),
     );
   }
@@ -653,252 +658,248 @@ class Body extends StatelessWidget {
     final TextEditingController _phoneController = TextEditingController();
     final TextEditingController _addressController = TextEditingController();
     final TextEditingController _userNameController = TextEditingController();
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 50),
-              // Doctor Name
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  hintText: 'اسم الدكتور',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'اسم الدكتور مطلوب';
-                  }
-                  return null;
-                },
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          const SizedBox(height: 50),
+          // Doctor Name
+          TextFormField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              hintText: 'اسم الدكتور',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
               ),
-              const SizedBox(height: 30),
-              TextFormField(
-                controller: _userNameController,
-                decoration: InputDecoration(
-                  hintText: 'اسم المستخدم',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'اسم المستخدم مطلوب';
-                  }
-                  return null;
-                },
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
               ),
-              const SizedBox(height: 30),
-              // Email
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  hintText: 'البريد الإلكتروني',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'البريد الإلكتروني مطلوب';
-                  }
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'اسم الدكتور مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+          TextFormField(
+            controller: _userNameController,
+            decoration: InputDecoration(
+              hintText: 'اسم المستخدم',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'اسم المستخدم مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+          // Email
+          TextFormField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              hintText: 'البريد الإلكتروني',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'البريد الإلكتروني مطلوب';
+              }
 
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
 
-              // Specialty
-              TextFormField(
-                controller: _specialtyController,
-                decoration: InputDecoration(
-                  hintText: 'التخصص',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+          // Specialty
+          TextFormField(
+            controller: _specialtyController,
+            decoration: InputDecoration(
+              hintText: 'التخصص',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'التخصص مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Phone Number (Required)
+          TextFormField(
+            controller: _phoneController,
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
+              hintText: 'رقم الهاتف',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'رقم الهاتف مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Address (Required)
+          TextFormField(
+            controller: _addressController,
+            decoration: InputDecoration(
+              hintText: 'العنوان',
+              filled: true,
+              fillColor: Colors.blueGrey[50],
+              labelStyle: const TextStyle(fontSize: 12),
+              contentPadding: const EdgeInsets.only(left: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blueGrey.shade50),
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'العنوان مطلوب';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 30),
+
+          // Submit Button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blueGrey.shade50,
+                  spreadRadius: 10,
+                  blurRadius: 20,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'التخصص مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
+              ],
+            ),
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                if (state.getUserState == GetUserState.success) {
+                  Future.delayed(Duration.zero,() => Navigator.pushNamed(context, '/doctor'),);
+                }
+                return Column(
+                  children: [
+                    if (state.getUserState == GetUserState.failure)
+                      Text(
+                        state.error!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ElevatedButton(
+                      onPressed: state.getUserState != GetUserState.loading
+                          ? () {
+                              if (_formKey.currentState!.validate()) {
+                                User user = User(
+                                  name: _nameController.text,
+                                  username: _userNameController.text,
+                                  email: _emailController.text,
+                                  specialty: _specialtyController.text,
+                                  phoneNumber: _phoneController.text,
+                                  address: _addressController.text,
+                                );
 
-              // Phone Number (Required)
-              TextFormField(
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                  hintText: 'رقم الهاتف',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'رقم الهاتف مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // Address (Required)
-              TextFormField(
-                controller: _addressController,
-                decoration: InputDecoration(
-                  hintText: 'العنوان',
-                  filled: true,
-                  fillColor: Colors.blueGrey[50],
-                  labelStyle: const TextStyle(fontSize: 12),
-                  contentPadding: const EdgeInsets.only(left: 30),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blueGrey.shade50),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'العنوان مطلوب';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 30),
-
-              // Submit Button
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey.shade50,
-                      spreadRadius: 10,
-                      blurRadius: 20,
+                                context.read<AuthCubit>().register(user);
+                              } else {
+                                print("Validation Failed");
+                              }
+                            }
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.deepPurple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: state.getUserState == GetUserState.loading
+                              ? SizedBox(
+                                  width: 50,
+                                  child: CircularProgressIndicator())
+                              : const Center(child: Text("تسجيل"))),
                     ),
                   ],
-                ),
-                child: BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    if (state.getUserState == GetUserState.success) {
-                      Future.delayed(Duration.zero,() => Navigator.pushNamed(context, '/doctor'),);
-                    }
-                    return Column(
-                      children: [
-                        if (state.getUserState == GetUserState.failure)
-                          Text(
-                            state.error!,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ElevatedButton(
-                          onPressed: state.getUserState != GetUserState.loading
-                              ? () {
-                                  if (_formKey.currentState!.validate()) {
-                                    User user = User(
-                                      name: _nameController.text,
-                                      username: _userNameController.text,
-                                      email: _emailController.text,
-                                      specialty: _specialtyController.text,
-                                      phoneNumber: _phoneController.text,
-                                      address: _addressController.text,
-                                    );
-
-                                    context.read<AuthCubit>().register(user);
-                                  } else {
-                                    print("Validation Failed");
-                                  }
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.deepPurple,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: Container(
-                              width: double.infinity,
-                              height: 50,
-                              child: state.getUserState == GetUserState.loading
-                                  ? SizedBox(
-                                      width: 50,
-                                      child: CircularProgressIndicator())
-                                  : const Center(child: Text("تسجيل"))),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 5),
-              TextButton(
-                onPressed: () {
-                  context
-                      .read<AuthCubit>()
-                      .changeRegisterType(registerType: RegisterType.patient);
-                },
-                child: const Text('Register As A Patient'),
-              ),
-              const SizedBox(height: 40),
-            ],
+                );
+              },
+            ),
           ),
-        ),
+          const SizedBox(height: 5),
+          TextButton(
+            onPressed: () {
+              context
+                  .read<AuthCubit>()
+                  .changeRegisterType(registerType: RegisterType.patient);
+            },
+            child: const Text('Register As A Patient'),
+          ),
+          const SizedBox(height: 40),
+        ],
       ),
     );
   }

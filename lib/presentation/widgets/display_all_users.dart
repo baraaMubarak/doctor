@@ -38,7 +38,7 @@ class DisplayAllUsers extends StatelessWidget {
                             style: ListTileStyle.drawer,
                             tileColor: Colors.deepPurple.shade50,
                             shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                            leading: Image.asset('images/doctor.png'),
+                            leading: Image.asset('assets/images/doctor.png'),
                             onTap: () {
                               context.read<MiddleCubit>().changeRightUser(user: state.allUsers!['admins']![i]);
                             },
@@ -59,7 +59,7 @@ class DisplayAllUsers extends StatelessWidget {
                           style: ListTileStyle.drawer,
                           tileColor: Colors.deepPurple.shade50,
                           shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          leading: Image.asset('images/doctor.png'),
+                          leading: Image.asset('assets/images/doctor.png'),
                           onTap: () {
                             try {
                               Logger().f(state.allUsers);
@@ -87,7 +87,7 @@ class DisplayAllUsers extends StatelessWidget {
                           style: ListTileStyle.drawer,
                           tileColor: Colors.deepPurple.shade50,
                           shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                          leading: Image.asset('images/doctor.png'),
+                          leading: Image.asset('assets/images/doctor.png'),
                           onTap: () {
                             context.read<MiddleCubit>().changeRightUser(user: state.allUsers!['patients']![i]);
                           },

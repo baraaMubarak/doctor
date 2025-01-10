@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:doctor_flutter_web/core/api/api_config.dart';
 import 'package:doctor_flutter_web/logic/auth/auth_state.dart';
 import 'package:doctor_flutter_web/model/User.dart';
@@ -25,7 +26,7 @@ class AuthCubit extends Cubit<AuthState>{
       User user = User.fromJson(jsonDecode(prefs.getString('user')!));
       emit(state.copyWith(user: user));
     }else if(state.user == null){
-      Navigator.pushReplacementNamed(context, '/login');
+      // Navigator.pushReplacementNamed(context, '/');
     }else{
       emit(state.copyWith(user: state.user));
     }
@@ -47,11 +48,16 @@ class AuthCubit extends Cubit<AuthState>{
   login({required String userName,required String password}) async {
     emit(state.copyWith(getUserState: GetUserState.loading));
     Logger().d(userName + password);
-    var response = await http.post(Uri.parse(ApiConfig.login), body: jsonEncode({
+    //////
+
+    var uri = Uri.https('healthcare-doctor.rf.gd', '/api/login');
+
+
+    var response = await http.post(uri, body: jsonEncode({
       'username':userName,
       'password':password,
     }),headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     });
     Logger().f(response.body);
     if (response.statusCode == 200) {

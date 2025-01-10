@@ -60,7 +60,7 @@ class MiddleState {
         children: [
           Positioned.fill(
               child: Image.asset(
-            'images/background.png',
+            'assets/images/background.png',
             fit: BoxFit.cover,
             opacity: const AlwaysStoppedAnimation(.2),
           )),
